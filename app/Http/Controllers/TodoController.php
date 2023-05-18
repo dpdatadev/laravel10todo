@@ -9,7 +9,8 @@ class TodoController extends Controller
 {
     public function index()
     {
-        $todosToDisplay = Todo::orderBy('created_at', 'desc')->get();
+        //Show 10 most recently created TODO's
+        $todosToDisplay = Todo::where('is_completed', 0)->orderBy('created_at', 'desc')->take(10)->get();
         return view('todos', ['todos' => $todosToDisplay]);
     }
 
@@ -24,6 +25,7 @@ class TodoController extends Controller
             'body' => strip_tags(stripslashes($request->body), $allowedTags) . "\n",
         ]);
 
-        return redirect('/');
+        return redirect()->route('todos.index')
+            ->withSuccess(__('TODO submitted!'));
     }
 }

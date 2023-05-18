@@ -1,27 +1,12 @@
-<!--TODO-->
-<?php
-//$_POST request processing
-
-use App\Models\Todo;
-
-
-if (isset($_POST['body']) && $_POST['body'] != '') {
-    $displaySnippet = "it worked!" . substr($_POST['body'], 0, 100);
-    $sTitle = strip_tags(stripslashes($_POST['title']), $allowedTags);
-    $sContent = strip_tags(stripslashes($_POST['body']), $allowedTags) . "\n";
-
-    Todo::create(
-        ['title' => $sTitle, 'body' => $sContent]
-    );
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="{!! url('assets/bootstrap/css/bootstrap.min.css') !!}" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.tiny.cloud/1/hahp7c2g5bvxi9592n0tg3nut01jw5ywe7pdkonv19qpfnp0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
@@ -63,7 +48,7 @@ if (isset($_POST['body']) && $_POST['body'] != '') {
         });
     </script>
     <hr />
-    <p>{{ session()->get('success') ?: '' }}</p>
+    <p style='color: green;'><b>{{ session()->get('success') ?: '' }}</b></p>
     <a href="">Create New</a>
     <table>
         <tr>

@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [TodoController::class, 'index'])->middleware(['auth', 'verified'])->name('todos');
+Route::get('/', [TodoController::class, 'index'])->middleware(['auth', 'verified'])->name('todos.index');
 Route::post('/todos', [TodoController::class, 'create'])->middleware(['auth', 'verified'])->name('todos.create');
 
 Route::get('/admin', function () {
