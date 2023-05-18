@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Todo;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('todos');
+Route::match(['get', 'post'], '/', function () {
+    return view('todos', ['todos' => Todo::all()]);
 })->middleware(['auth', 'verified'])->name('todos');
 
 Route::get('/dashboard', function () {
