@@ -4,18 +4,11 @@
 
 use App\Models\Todo;
 
-$displayVar = "nothing";
 
-
-//Allowed input
-$allowedTags = '<p><strong><em><u><h1><h2><h3><h4><h5><h6><img>';
-$allowedTags .= '<li><ol><ul><span><div><br><ins><del>';
-
-
-if (isset($_POST['tinyContent']) && $_POST['tinyContent'] != '') {
-    $displayVar = "it worked!" . $_POST['tinyContent'];
+if (isset($_POST['body']) && $_POST['body'] != '') {
+    $displaySnippet = "it worked!" . substr($_POST['body'], 0, 100);
     $sTitle = strip_tags(stripslashes($_POST['title']), $allowedTags);
-    $sContent = strip_tags(stripslashes($_POST['tinyContent']), $allowedTags) . "\n";
+    $sContent = strip_tags(stripslashes($_POST['body']), $allowedTags) . "\n";
 
     Todo::create(
         ['title' => $sTitle, 'body' => $sContent]
@@ -36,14 +29,14 @@ if (isset($_POST['tinyContent']) && $_POST['tinyContent'] != '') {
 </head>
 
 <body>
-    <?php echo $displayVar; ?>
-    <?php echo "<br />"; ?>
-    <?php echo "<hr />"; ?>
+    <h4>What's the goal for today?</h4>
+    <small>{{date('y/m/d')}}</small>
+    <hr />
     <a href='login.php'>Login </a><small>|</small>
     <a href='logout.php'>Logout </a><small>|</small>
     <a href='/dbinfo'>Database Info </a>
     <div>
-        <form method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
+        <form method="POST" action="{{route('todos.create')}}">
             @csrf
             <br />
             <label>New ToDO Title:</label>
@@ -51,14 +44,14 @@ if (isset($_POST['tinyContent']) && $_POST['tinyContent'] != '') {
             <textarea id="title" name="title"></textarea>
             <br />
             <label>New ToDo/Goal Description:</label>
-            <textarea id="tinyContent" name="tinyContent"></textarea>
+            <textarea id="body" name="body"></textarea>
             <br />
             <input type="submit" name="save" value="Submit" />
             <!--<input type="reset" name="reset" value="Reset" />-->
         </form>
     </div>
     <script>
-        $('textarea#tinyContent').tinymce({
+        $('textarea#body').tinymce({
             height: 500,
             menubar: false,
             plugins: [
@@ -102,44 +95,3 @@ if (isset($_POST['tinyContent']) && $_POST['tinyContent'] != '') {
 </body>
 
 </html>
-
-
-<!-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>TODOS</title>
-    </head>
-    <body class="antialiased">
-        <p>{{ session()->get('success') ?: '' }}</p>
-        <a href="">Create New</a>
-        <table>
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Details</th>
-                <th>Is Completed</th>
-                <th>Create Time</th>
-            </tr>
-            @forelse ($todos as $todo)
-            <tr>
-                <td>{{ $loop->index + 1 }}</td>
-                <td>{{ $todo->title }}</td>
-                <td>{{$todo->body}}</td>
-                <td>{{$todo->is_completed}}</td>
-                <td>{{$todo->created_at}}</td>
-                <td><a href="">Edit</a></td>
-                <td><a href="">Show</a></td>
-                <form method="POST" action="">
-                    @csrf
-                    @method('delete')
-                    <button type="submit">Delete</button>
-                </form>
-            </tr>
-            @empty
-                <p>No todos found!</p>
-            @endforelse
-        </table>
-    </body>
-</html> -->

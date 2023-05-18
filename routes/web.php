@@ -1,25 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Models\Todo;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', [TodoController::class, 'index'])->middleware(['auth', 'verified'])->name('todos');
+Route::post('/todos', [TodoController::class, 'create'])->middleware(['auth', 'verified'])->name('todos.create');
 
-Route::match(['get', 'post'], '/', function () {
-    return view('todos', ['todos' => Todo::all()]);
-})->middleware(['auth', 'verified'])->name('todos');
-
-Route::get('/dashboard', function () {
+Route::get('/admin', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -29,4 +17,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
