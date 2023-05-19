@@ -26,7 +26,7 @@
             <br />
             <label>New ToDO Title:</label>
             <br />
-            <textarea id="title" name="title"></textarea>
+            <input id="title" name="title"></input>
             <br />
             <label>New ToDo/Goal Description:</label>
             <textarea id="body" name="body"></textarea>
