@@ -48,6 +48,15 @@
         });
     </script>
     <hr />
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <p style='color: green;'><b>{{ session()->get('success') ?: '' }}</b></p>
     <a href="">Create New</a>
     <table>
