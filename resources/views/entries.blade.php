@@ -18,7 +18,7 @@
     <script src="https://cdn.tiny.cloud/1/hahp7c2g5bvxi9592n0tg3nut01jw5ywe7pdkonv19qpfnp0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
     <div class="container">
-    <h4>What's the goal for today?</h4>
+    <h4>What's on your mind today?</h4>
     <small>{{date('y/m/d')}}</small>
     <hr />
     <a href='login.php'>Login </a><small>|</small>
@@ -28,14 +28,15 @@
         <form method="POST" action="{{route('todos.create')}}">
             @csrf
             <br />
-            <label>New ToDO Title:</label>
+            <label>New Journal Entry Title:</label>
             <br />
             <input id="title" name="title"></input>
             <br />
-            <label>New ToDo/Goal Description:</label>
+            <label>New Journal Entry:</label>
             <textarea id="body" name="body"></textarea>
             <br />
-            <input type="submit" name="save" value="Submit" />
+            <button type="submit" name="save" value="Submit"></button>
+            <!--<input type="submit" name="save" value="Submit" />-->
             <!--<input type="reset" name="reset" value="Reset" />-->
         </form>
     </div>
@@ -65,27 +66,23 @@
     @endif
     <div class="container">
     <p style='color: green;'><b>{{ session()->get('success') ?: '' }}</b></p>
-    <a href="">Create New</a>
+    <a href="">Write New</a>
     <table>
         <tr>
             <th>#</th>
             <th>Title</th>
-            <th>Details</th>
-            <th>Is Completed</th>
             <th>Create Time</th>
         </tr>
-        @forelse ($todos as $todo)
+        @forelse ($entries as $entry)
         <tr>
             <td>{{ $loop->index + 1 }}</td>
-            <td>{{ $todo->title }}</td>
-            <td>{{$todo->body}}</td>
-            <td>{{$todo->is_completed}}</td>
-            <td>{{$todo->created_at}}</td>
+            <td>{{ $entry->title }}</td>
+            <td>{{$entry->created_at}}</td>
             <td><a href="">Edit</a></td>
             <td><a href="">Show</a></td>
         </tr>
         @empty
-        <p>No todos found!</p>
+        <p>No entries found!</p>
         @endforelse
     </table>
     </div>
