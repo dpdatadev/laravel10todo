@@ -81,8 +81,13 @@
             <td>{{$todo->body}}</td>
             <td>{{$todo->is_completed}}</td>
             <td>{{$todo->created_at}}</td>
-            <td><a href="">Edit</a></td>
+            <td><a href="">Edit</a> | </td>
             <td><a href="">Show</a></td>
+            <form action="{{ route('todos.destroy', $todo->id) }}" method="POST">
+                @csrf
+                @method('delete')
+                <td><button type="submit" class="btn btn-outline-danger"> | <span style='color: red;'>DELETE</span></button></td>
+            </form>
         </tr>
         @empty
         <p>No todos found!</p>

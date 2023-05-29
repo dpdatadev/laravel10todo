@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todo;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
@@ -14,7 +15,7 @@ class TodoController extends Controller
         return view('todos', ['todos' => $todosToDisplay]);
     }
 
-    public function create(Request $request)
+    public function create(Request $request): RedirectResponse
     {
         //Allowed input
         $allowedTags = '<p><strong><em><u><h1><h2><h3><h4><h5><h6><img>';
@@ -26,5 +27,14 @@ class TodoController extends Controller
         ]);
 
         return redirect()->route('todos.index')->withSuccess(__('TODO submitted!'));
+    }
+
+    public function destroy(int $id): RedirectResponse
+    {
+        $toDoToDelete = Todo::find($id);
+
+        $toDoToDelete->delete();
+
+        return redirect()->route('todos.index')->withSuccess(__('TODO deleted!'));
     }
 }

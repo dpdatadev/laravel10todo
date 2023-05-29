@@ -5,9 +5,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
-# TODOS
-Route::get('/', [TodoController::class, 'index'])->middleware(['auth', 'verified'])->name('todos.index');
-Route::post('/todos', [TodoController::class, 'create'])->middleware(['auth', 'verified'])->name('todos.create');
+
+Route::controller(TodoController::class)->group(function () {
+    Route::get('/', 'index')->middleware(['auth', 'verified'])->name('todos.index');
+    Route::post('/todos', 'create')->middleware(['auth', 'verified'])->name('todos.create');
+    Route::delete('/todos/{id}', 'destroy')->middleware(['auth', 'verified'])->name('todos.destroy');
+});
 
 
 # Journal Entries
